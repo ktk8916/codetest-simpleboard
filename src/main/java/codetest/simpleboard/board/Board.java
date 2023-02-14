@@ -40,4 +40,8 @@ public class Board {
         board.regDttm = new Date();
         return board;
     }
+
+    public Long increaseHits(){
+        return ++hits;
+    }
 }

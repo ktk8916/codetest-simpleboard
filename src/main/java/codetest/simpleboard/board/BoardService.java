@@ -30,11 +30,14 @@ public class BoardService {
         return repository.save(board).getNo();
     }
 
+    //단건 조회에 조회수 증가를 위해서 @Transactional을 붙이는게 맞나 ?
+    @Transactional
     public BoardDetailViewDto findOne(Long id){
         Board board = repository.findByNo(id);
         if(board==null){
             throw new IllegalArgumentException(id + "번 게시글이 존재하지 않습니다.");
         }
+        board.increaseHits();
         return new BoardDetailViewDto(board);
     }
 }
