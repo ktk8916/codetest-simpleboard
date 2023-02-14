@@ -8,7 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import codetest.simpleboard.board.boarddto.BoardDetailViewDto;
 import codetest.simpleboard.board.boarddto.BoardListDto;
-import codetest.simpleboard.board.boarddto.CreateBoardDto;
+import codetest.simpleboard.board.boarddto.UpdateBoardDto;
+import codetest.simpleboard.board.boarddto.WriteBoardDto;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -18,26 +19,42 @@ public class BoardService {
     
     private final BoardRepository repository;
 
+    //게시글 목록 조회
     public List<BoardListDto> findAll(){
         List<Board> boards = repository.findAll();
         List<BoardListDto> result = boards.stream().map(board->new BoardListDto(board)).collect(Collectors.toList());
         return result;
     }
 
+    //게시글 조회
+    public Board findOne(Long no){
+        Board board = repository.findByNo(no);
+        if(board==null){
+            throw new IllegalArgumentException(no + "번 게시글이 존재하지 않습니다.");
+        }
+        return board;
+    }
+
+    //게시글 작성
     @Transactional
-    public Long save(CreateBoardDto dto){
+    public Long writeBoard(WriteBoardDto dto){
         Board board = Board.createBoard(dto.getTitle(), dto.getContent(), dto.getRegName());
         return repository.save(board).getNo();
     }
 
-    //단건 조회에 조회수 증가를 위해서 @Transactional을 붙이는게 맞나 ?
+    //게시글 상세보기
     @Transactional
-    public BoardDetailViewDto findOne(Long id){
-        Board board = repository.findByNo(id);
-        if(board==null){
-            throw new IllegalArgumentException(id + "번 게시글이 존재하지 않습니다.");
-        }
+    public BoardDetailViewDto detailViewBoard(Long no){
+        Board board = findOne(no);
         board.increaseHits();
         return new BoardDetailViewDto(board);
+    }
+
+    @Transactional
+    public Long updateBoard(Long no, UpdateBoardDto dto){
+        Board board = findOne(no);
+        Board.changeBoard(board, dto.getTitle(), dto.getContent());
+
+        return board.getNo();
     }
 }
