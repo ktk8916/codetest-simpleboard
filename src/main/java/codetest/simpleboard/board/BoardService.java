@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import codetest.simpleboard.board.boarddto.BoardDetailViewDto;
 import codetest.simpleboard.board.boarddto.BoardListDto;
 import codetest.simpleboard.board.boarddto.CreateBoardDto;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,13 @@ public class BoardService {
     public Long save(CreateBoardDto dto){
         Board board = Board.createBoard(dto.getTitle(), dto.getContent(), dto.getRegName());
         return repository.save(board).getNo();
+    }
+
+    public BoardDetailViewDto findOne(Long id){
+        Board board = repository.findByNo(id);
+        if(board==null){
+            throw new IllegalArgumentException(id + "번 게시글이 존재하지 않습니다.");
+        }
+        return new BoardDetailViewDto(board);
     }
 }
