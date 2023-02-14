@@ -41,6 +41,13 @@ public class Board {
         return board;
     }
 
+    public static Board changeBoard(Board board, String title, String content){
+        board.title = title;
+        board.content = content;
+        board.regDttm = new Date();
+        return board;
+    }
+
     public Long increaseHits(){
         return ++hits;
     }
