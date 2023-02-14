@@ -17,4 +17,17 @@ public class BoardTest {
         assertEquals(board.getHits(), 0);
         assertNotEquals(board.getRegDttm(), null);
     }
+
+    @Test
+    @DisplayName("조회수 증가")
+    void testIncreaseHits() {
+        Board board = Board.createBoard("title", "content", "name");
+        
+        Long hits = board.increaseHits();
+        
+        assertEquals(hits, 1);
+    }
+
+
+    
 }
