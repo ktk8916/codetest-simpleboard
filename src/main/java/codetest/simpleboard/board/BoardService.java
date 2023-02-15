@@ -50,11 +50,19 @@ public class BoardService {
         return new BoardDetailViewDto(board);
     }
 
+    //게시글 수정
     @Transactional
     public Long updateBoard(Long no, UpdateBoardDto dto){
         Board board = findOne(no);
         Board.changeBoard(board, dto.getTitle(), dto.getContent());
 
         return board.getNo();
+    }
+
+    //게시글 삭제
+    @Transactional
+    public void deleteBoard(Long no){
+        Board board = findOne(no);
+        repository.delete(board);
     }
 }

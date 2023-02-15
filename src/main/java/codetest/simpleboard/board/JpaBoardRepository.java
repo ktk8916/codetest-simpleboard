@@ -11,5 +11,6 @@ public interface JpaBoardRepository extends BoardRepository, JpaRepository<Board
     List<Board> findAll();
     Board save(Board board);
     Board findByNo(Long no);
+    void delete(Board board);
     
 }

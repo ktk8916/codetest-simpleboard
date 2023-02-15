@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,6 +44,11 @@ public class BoardController{
     @PutMapping("/board/{no}")
     public Long save(@PathVariable("no") Long no, @RequestBody UpdateBoardDto dto){
         return boardService.updateBoard(no, dto);
+    }
+
+    @DeleteMapping("/board/{no}")
+    public void deleteBoard(@PathVariable("no") Long no){
+        boardService.deleteBoard(no);
     }
 
 }
