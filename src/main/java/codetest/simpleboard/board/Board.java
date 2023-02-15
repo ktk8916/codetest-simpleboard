@@ -41,11 +41,10 @@ public class Board {
         return board;
     }
 
-    public static Board changeBoard(Board board, String title, String content){
-        board.title = title;
-        board.content = content;
-        board.regDttm = new Date();
-        return board;
+    public void changeBoard(String title, String content){
+        this.title = title;
+        this.content = content;
+        this.regDttm = new Date();
     }
 
     public Long increaseHits(){

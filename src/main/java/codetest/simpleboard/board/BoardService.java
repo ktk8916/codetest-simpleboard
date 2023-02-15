@@ -61,7 +61,7 @@ public class BoardService {
     @Transactional
     public Long updateBoard(Long no, UpdateBoardDto dto){
         Board board = findOne(no);
-        Board.changeBoard(board, dto.getTitle(), dto.getContent());
+        board.changeBoard(dto.getTitle(), dto.getContent());
 
         return board.getNo();
     }
