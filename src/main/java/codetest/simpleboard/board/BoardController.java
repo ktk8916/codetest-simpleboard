@@ -31,8 +31,13 @@ public class BoardController{
         return boardService.findAll();
     }
 
+    @GetMapping("/board/search/{keyword}")
+    public List<BoardListDto> findBySearch(@PathVariable("keyword") String keyword){
+        return boardService.findBySearch(keyword, keyword);
+    }
+
     @GetMapping("/board/{no}")
-    public BoardDetailViewDto findBoardById(@PathVariable("no") Long no){
+    public BoardDetailViewDto findById(@PathVariable("no") Long no){
         return boardService.detailViewBoard(no);
     }
 

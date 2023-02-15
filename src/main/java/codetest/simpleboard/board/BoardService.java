@@ -26,6 +26,13 @@ public class BoardService {
         return result;
     }
 
+    //게시글 제목, 내용으로 조회
+    public List<BoardListDto> findBySearch(String keyword1, String keyword2){
+        List<Board> boards = repository.findByTitleContainsOrContentContains(keyword1, keyword2);
+        List<BoardListDto> result = boards.stream().map(board->new BoardListDto(board)).collect(Collectors.toList());
+        return result;
+    }
+
     //게시글 조회
     public Board findOne(Long no){
         Board board = repository.findByNo(no);
