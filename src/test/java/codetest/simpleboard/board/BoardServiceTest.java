@@ -21,9 +21,9 @@ class BoardServiceTest {
 
     @BeforeEach
     public void init(){
-        boardService.writeBoard(new WriteBoardDto("title1", "content1", "nam1"));
-        boardService.writeBoard(new WriteBoardDto("title2", "content2", "name2"));
-        boardService.writeBoard(new WriteBoardDto("title3", "content3", "name3"));
+        for(int i=0;i<50;i++){
+            boardService.writeBoard(new WriteBoardDto("title" + i, "content"+ i, "name"+ i));
+        }
     }
     
     @Test
@@ -34,5 +34,11 @@ class BoardServiceTest {
         BoardDetailViewDto viewBoard = boardService.detailViewBoard( 1L );
 
         assertEquals(beforeHits+ 1, viewBoard.getHits());
+    }
+
+    @Test
+    @DisplayName("게시글이 존재하지 않으면 예외를 발생시켜야 한다.")
+    public void t2(){
+        assertThrows(IllegalArgumentException.class,()-> boardService.findOne(100L)) ;
     }
 }
