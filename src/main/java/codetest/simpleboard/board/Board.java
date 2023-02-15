@@ -19,13 +19,14 @@ public class Board {
     @Column(name = "board_no")
     private Long no;
 
+    @Column(length = 300)
     private String title;
     
     private String content;
     
     private Long hits;
     
-    @Column(name = "reg_name")
+    @Column(name = "reg_name", length = 100)
     private String regName;
     
     @Column(name = "reg_dttm")
